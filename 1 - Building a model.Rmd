@@ -44,6 +44,11 @@ Let's take a look at the data:
 urchins
 ```
 
+```{r}
+DataExplorer::plot_intro(urchins)
+```
+
+
 The urchins data is a tibble. If you are new to tibbles, the best place to start is the tibbles chapter in R for Data Science. For each of the 72 urchins, we know their:
 
 * Experimental feeding regime group (food_regime: either Initial, Low, or High),
@@ -158,6 +163,12 @@ plot_data <-
   bind_cols(mean_pred) %>% 
   bind_cols(conf_int_pred)
 
+plot_data
+```
+
+
+
+```{r}
 # and plot:
 ggplot(plot_data, aes(x = food_regime)) + 
   geom_point(aes(y = .pred)) + 
@@ -222,7 +233,7 @@ This isn’t very different from the non-Bayesian results (except in interpretat
 
 # Why does it work that way?
 
-The extra step of defining the model using a function like `linear_reg()` might seem superfluous since a call to `lm()` is much more succinct. However, the problem with standard modeling functions is that they don’t separate what you want to do from the execution. For example, the process of executing a formula has to happen repeatedly across model calls even when the formula does not change; we can’t recycle those computations.
+The extra step of defining the model using a function like `linear_reg()` might seem superfluous since a call to `lm()` is much more succinct. However, the problem with standard modeling functions is that **they don’t separate what you want to do from the execution**. For example, the process of executing a formula has to happen repeatedly across model calls even when the formula does not change; we can’t recycle those computations.
 
 Also, using the tidymodels framework, we can do some interesting things by incrementally creating a model (instead of using single function call). Model tuning with tidymodels uses the specification of the model to declare what parts of the model should be tuned. That would be very difficult to do if `linear_reg()` immediately fit the model.
 
